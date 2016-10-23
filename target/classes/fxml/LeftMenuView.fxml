@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="leftMenuAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1033.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="electrostatic.java.fx.controller.LeftMenuController">
+   <children>
+      <SplitPane dividerPositions="0.30629853321829165" orientation="VERTICAL" prefHeight="970.0" prefWidth="200.0" styleClass="split-pane-divider" AnchorPane.bottomAnchor="-128.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="231.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <HBox prefHeight="20.0" prefWidth="200.0" styleClass="overlap">
+                           <children>
+                              <Label text="Lista ładunków" />
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                           <padding>
+                              <Insets bottom="2.0" left="10.0" top="2.0" />
+                           </padding>
+                        </HBox>
+                        <AnchorPane prefHeight="2000.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="chargesListView" prefHeight="1000.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="198.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="200.0" styleClass="overlap">
+                           <children>
+                              <Label text="Siły" />
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="10.0" top="2.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="428.0" prefWidth="198.0" style="-fx-background-color: white;">
+                           <children>
+                              <VBox prefHeight="428.0" prefWidth="119.0" spacing="5.0">
+                                 <children>
+                                    <Label text="Siła F:" />
+                                    <Label layoutX="15.0" layoutY="15.0" text="Składowa Fx:" />
+                                    <Label layoutX="15.0" layoutY="15.0" text="Składowa Fy:" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="5.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="10.0" prefHeight="428.0" prefWidth="129.0" spacing="5.0">
+                                 <children>
+                                    <Label fx:id="forceLabel" text="0" />
+                                    <Label fx:id="forceXLabel" layoutX="15.0" layoutY="15.0" text="0" />
+                                    <Label fx:id="forceYLabel" layoutX="15.0" layoutY="15.0" text="0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
