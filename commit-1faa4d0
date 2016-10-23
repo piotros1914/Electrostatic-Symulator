@@ -1,0 +1,21 @@
+From 1faa4d057c921022c2aa028d2e18ea38fb56723f Mon Sep 17 00:00:00 2001
+From: Patryk Piotrowski <piotros1914@gmail.com>
+Date: Sun, 23 Oct 2016 23:26:45 +0200
+Subject: Wersja aktualna
+
+
+diff --git a/src/main/java/electrostatic/java/fx/controller/AppController.java b/src/main/java/electrostatic/java/fx/controller/AppController.java
+index b5d640c..b040ba2 100644
+--- a/src/main/java/electrostatic/java/fx/controller/AppController.java
++++ b/src/main/java/electrostatic/java/fx/controller/AppController.java
+@@ -107,8 +107,8 @@ public class AppController {
+ 						mainController.getRightMenuController().clear();
+ 				}
+ 		});
+-		//
+-// dupa dupa
++		
++
+ 		// przechwytywanie uruchomienia menu kontekstowego
+ 		box.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+ 			cursorPositionX = mouseEvent.getX();

@@ -107,7 +107,7 @@ public class AppController {
 						mainController.getRightMenuController().clear();
 				}
 		});
-		// czokoloko
+		// czokolokoo
 
 		// przechwytywanie uruchomienia menu kontekstowego
 		box.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
