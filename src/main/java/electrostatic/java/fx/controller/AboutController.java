@@ -7,9 +7,7 @@ public class AboutController {
 	
 	@FXML
 	private Button closeBtn;
-	
-	
-	
+		
 	@FXML
 	public void initialize(){
 		
