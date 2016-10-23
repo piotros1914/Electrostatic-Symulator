@@ -107,8 +107,8 @@ public class AppController {
 						mainController.getRightMenuController().clear();
 				}
 		});
-		//
-// dupa dupa
+		
+
 		// przechwytywanie uruchomienia menu kontekstowego
 		box.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
 			cursorPositionX = mouseEvent.getX();
