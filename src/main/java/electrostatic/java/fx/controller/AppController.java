@@ -1,7 +1,7 @@
 package electrostatic.java.fx.controller;
 
 import electrostatic.java.fx.model.ChargeControll;
-
+import electrostatic.java.fx.model.Converter;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.chart.NumberAxis;
@@ -127,7 +127,7 @@ public class AppController {
 
 		box.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEvent-> {
 			mainController.getCursorPositionXLabel().setText(String.valueOf(mouseEvent.getX()));
-			mainController.getCursorPositionYLabel().setText(String.valueOf(mouseEvent.getY()));
+			mainController.getCursorPositionYLabel().setText(Converter.mouseYConverter(mouseEvent.getY(), box.getWidth()));
 			
 		});
 		

@@ -1,26 +1,16 @@
 package electrostatic.java.fx.model;
 
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.List;
 
 import electrostatic.java.fx.controller.MainController;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
+
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Pane;
+
 import javafx.util.converter.NumberStringConverter;
 
 public class ChargeControll implements Cloneable {
@@ -35,7 +25,6 @@ public class ChargeControll implements Cloneable {
 	int count;
 
 	Charge selectedCharge;
-	
 
 	public ChargeControll(Pane box) {
 		this.box = box;
@@ -50,8 +39,6 @@ public class ChargeControll implements Cloneable {
 		// addCharge(200, 100, 30, 1);
 		// addCharge(100, 200, 30, 1);
 		// addCharge(200, 200, 30, 1);
-		
-	
 
 	}
 
@@ -96,26 +83,26 @@ public class ChargeControll implements Cloneable {
 		charge.setName("£adunek " + String.valueOf(count));
 		selectCharge(charge);
 
-		charge.setOnMouseClicked((event) -> {			
-				selectCharge(charge);				
-				updateForce();
+		charge.setOnMouseClicked((event) -> {
+			selectCharge(charge);
+			updateForce();
 		});
 
-		charge.setOnMousePressed((event) ->{			
+		charge.setOnMousePressed((event) -> {
 			if (charge.isSelected()) {
 				deltaX = charge.getCenterX() - event.getScreenX();
 				deltaY = charge.getCenterY() - event.getScreenY();
-			}			
+			}
 		});
 
-		charge.setOnMouseDragged((event) ->{	
+		charge.setOnMouseDragged((event) -> {
 			if (charge.isSelected()) {
 				charge.setCenterX(event.getScreenX() + deltaX);
 				charge.setCenterY(event.getScreenY() + deltaY);
 				updateForce();
 			}
 		});
-		
+
 		this.count++;
 		chargeObservableList.add(charge);
 	}
@@ -132,7 +119,7 @@ public class ChargeControll implements Cloneable {
 				Bindings.unbindBidirectional(
 						mainController.getRightMenuController().getPositionXTextField().textProperty(),
 						charge.centerXProperty());
-			
+
 				Bindings.unbindBidirectional(
 						mainController.getRightMenuController().getPositionYTextField().textProperty(),
 						charge.centerYProperty());
@@ -158,33 +145,32 @@ public class ChargeControll implements Cloneable {
 
 	private void bindCharge(Charge charge) {
 		Bindings.bindBidirectional(mainController.getRightMenuController().getPositionXTextField().textProperty(),
-				charge.centerXProperty(), new NumberStringConverter());
+				charge.centerXProperty(), Converter.normalConverter);
 		Bindings.bindBidirectional(mainController.getRightMenuController().getPositionYTextField().textProperty(),
-				charge.centerYProperty(), new NumberStringConverter());
+				charge.centerYProperty(), Converter.yInverseConverter(box.getHeight()));
 		Bindings.bindBidirectional(mainController.getRightMenuController().getRadiusTextField().textProperty(),
-				charge.radiusProperty(), new NumberStringConverter());
+				charge.radiusProperty(), Converter.normalConverter);
 		Bindings.bindBidirectional(mainController.getRightMenuController().getChargeTextField().textProperty(),
-				charge.chargeProperty(), new NumberStringConverter());
+				charge.chargeProperty(), Converter.normalConverter);
 		Bindings.bindBidirectional(mainController.getLeftMenuController().getForceLabel().textProperty(),
-				charge.getForce().getForceProperty(), new NumberStringConverter());
+				charge.getForce().getForceProperty(), Converter.normalConverter);
 		Bindings.bindBidirectional(mainController.getLeftMenuController().getForceXLabel().textProperty(),
-				charge.getForce().getForceXProperty(), new NumberStringConverter());
+				charge.getForce().getForceXProperty(), Converter.normalConverter);
 		Bindings.bindBidirectional(mainController.getLeftMenuController().getForceYLabel().textProperty(),
-				charge.getForce().getForceYProperty(), new NumberStringConverter());
+				charge.getForce().getForceYProperty(), Converter.yForceInverseConverter);
 		Bindings.bindBidirectional(mainController.getRightMenuController().getColorPicker().valueProperty(),
 				charge.colorProperty());
-
 		mainController.getRightMenuController().getChargeTitledPane().disableProperty()
 				.bind(charge.getDisabledProperty());
 
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	public void selectCharge(Charge charge) {
 		deselectAllCharges();
 		setSelectedCharge(charge);
-		
+
 		bindCharge(charge);
 		mainController.getLeftMenuController().getChargesListView().getSelectionModel().select(charge.getName());
 	}
@@ -270,7 +256,7 @@ public class ChargeControll implements Cloneable {
 
 		chargeObservableList.forEach(charge -> {
 			// dla lewej
-			if (0 > (charge.getCenterX() - charge.getRadius())) 
+			if (0 > (charge.getCenterX() - charge.getRadius()))
 				charge.setCenterX(charge.getRadius());
 
 			// dla prawej
@@ -279,7 +265,7 @@ public class ChargeControll implements Cloneable {
 
 			// dla góry
 			if (0 > (charge.getCenterY() - charge.getRadius()))
-				charge.setCenterY(charge.getRadius());		
+				charge.setCenterY(charge.getRadius());
 
 			// dla do³u
 			if ((box.getHeight()) < (charge.getCenterY() + charge.getRadius()))
@@ -316,8 +302,6 @@ public class ChargeControll implements Cloneable {
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
 	}
-
-	
 
 	public Pane getAppStackPane() {
 		return box;

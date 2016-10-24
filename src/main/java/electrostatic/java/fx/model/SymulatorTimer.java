@@ -34,7 +34,7 @@ public class SymulatorTimer extends AnimationTimer {
 
     	if(!isPause ){
     		clock += (now - old);
-    		timeAnimationLabel.setText(String.valueOf( round(clock/1000000000.0 , 2)) + " s");
+    		timeAnimationLabel.setText(String.valueOf( Converter.round(clock/1000000000.0 , 2)) + " s");
     	  
         	mainController.getAppController().getChargeControll().updateForce();
     		mainController.getAppController().getChargeControll().updatePosition(timeStep);
@@ -44,15 +44,6 @@ public class SymulatorTimer extends AnimationTimer {
 		old = now;
     }
 
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
-    }
-    
     public boolean wasPause(){
     	return this.wasPause;
     }
