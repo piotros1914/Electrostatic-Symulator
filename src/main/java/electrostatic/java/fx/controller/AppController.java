@@ -81,8 +81,7 @@ public class AppController {
 
 		appPane.getChildren().add(box);
 
-		// listenery dla ustawien wymiarów boxa, jego wysrodkowania i ustawien
-		// jego osi
+		// listenery dla ustawien wymiarów boxa, jego wysrodkowania i ustawien jego osi
 		setListeners();
 
 		// inicjacja g³ównego sterownika ³adunków
@@ -125,11 +124,7 @@ public class AppController {
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-//		appPane.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEvent-> {
-//			mainController.getCursorPositionXLabel().setText("0");
-//			mainController.getCursorPositionYLabel().setText("0");
-//			
-//		});
+
 		box.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEvent-> {
 			mainController.getCursorPositionXLabel().setText(String.valueOf(mouseEvent.getX()));
 			mainController.getCursorPositionYLabel().setText(String.valueOf(mouseEvent.getY()));
@@ -159,21 +154,22 @@ public class AppController {
 		yLeftAxis.prefHeightProperty().bind(box.prefHeightProperty());
 		yRightAxis.prefHeightProperty().bind(box.prefHeightProperty());
 
-		appPane.prefWidthProperty().addListener((obs, oldValue, newValue) -> {
-			// wysrodkowanie boxa
+		
+		appPane.widthProperty().addListener((obs, oldValue, newValue) -> {
+			// wysrodkowanie boxa			
 			int x = (int) (newValue.doubleValue() / 2 - box.getPrefWidth() / 2);
-			box.layoutXProperty().set(x);
+			box.layoutXProperty().set(x);					
 		});
 
-		appPane.prefHeightProperty().addListener((obs, oldValue, newValue) -> {
-			// wysrodkowanie boxa
+		appPane.heightProperty().addListener((obs, oldValue, newValue) -> {	
+			// wysrodkowanie boxa		
 			int y = (int) (newValue.doubleValue() / 2 - box.getPrefHeight() / 2);
-			box.layoutYProperty().set(y);
+			box.layoutYProperty().set(y);			
 		});
 
 		box.prefWidthProperty().addListener((obs, oldValue, newValue) -> {
 			// wysrodkowanie boxa
-			int x = (int) (appPane.getPrefWidth() / 2 - newValue.doubleValue() / 2);
+			int x = (int) (appPane.getWidth() / 2 - newValue.doubleValue() / 2);
 			box.layoutXProperty().set(x);
 
 			// ustawienie skali na osi
@@ -182,11 +178,15 @@ public class AppController {
 
 			// ustawienie pozycji prawej osi
 			yRightAxis.layoutXProperty().set(box.prefWidthProperty().get() + axisDistance);
+			
+			//ustawienie szerokosci appPane
+			appPane.setPrefWidth(newValue.doubleValue() + 200);
+		
 		});
 
 		box.prefHeightProperty().addListener((obs, oldValue, newValue) -> {
 			// wysrodkowanie boxa
-			int y = (int) (appPane.getPrefHeight() / 2 - newValue.doubleValue() / 2);
+			int y = (int) (appPane.getHeight() / 2 - newValue.doubleValue() / 2);
 			box.layoutYProperty().set(y);
 
 			// ustawienie skali na osi
@@ -195,6 +195,8 @@ public class AppController {
 
 			// ustawienie pozycji dolnej osi
 			xDownAxis.layoutYProperty().set(box.prefHeightProperty().get() + axisDistance);
+			// ustawienie wysokosci appPane
+			appPane.setPrefHeight(newValue.doubleValue() + 200);
 		});
 
 	}

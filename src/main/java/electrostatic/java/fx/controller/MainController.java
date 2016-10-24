@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import electrostatic.java.fx.model.SymulatorTimer;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,9 +14,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -81,8 +77,12 @@ public class MainController {
 	
 		appController = appLoader.getController();
 		appController.setMainController(this);
+		
 		scrollPane = new ScrollPane(appPane);
-		scrollPane.autosize();
+		scrollPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		
+		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 		scrollPane.getStyleClass().add("scroll");
 		mainBorderPane.setCenter( scrollPane);	
 			
@@ -116,8 +116,11 @@ public class MainController {
 		symulatorTimer.setMainController(this);
 	
 		// Parametry szerokoœci i wysokoœci
-		appPane.minWidthProperty().set(mainBorderPane.getPrefWidth() - rightMenuAnchorPane.getPrefWidth() - leftMenuAnchorPane.getPrefWidth());
-		appPane.setMinHeight(mainBorderPane.getPrefHeight() - topMenuVBox.getPrefHeight());	
+
+		appPane.minWidthProperty().bind(scrollPane.prefWidthProperty());
+		appPane.minHeightProperty().bind(scrollPane.prefHeightProperty());
+		appPane.setPrefWidth(appPane.getMinWidth());
+		appPane.setPrefHeight(appPane.getMinHeight());	
 		leftMenuAnchorPane.setPrefHeight(mainBorderPane.getPrefHeight() - topMenuVBox.getPrefHeight() - downVBox.getPrefHeight());
 		rightMenuAnchorPane.setPrefHeight(mainBorderPane.getPrefHeight() - topMenuVBox.getPrefHeight()  - downVBox.getPrefHeight());
 		sizeListener();	
@@ -187,25 +190,17 @@ public class MainController {
 	
 	private void sizeListener(){
 		
-		mainBorderPane.widthProperty().addListener(new ChangeListener<Number>(){
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {	
-				appPane.setPrefWidth(newValue.doubleValue() - rightMenuAnchorPane.getPrefWidth() - leftMenuAnchorPane.getPrefWidth() );				
-			}			
+		mainBorderPane.widthProperty().addListener((obs, oldValue, newValue) ->{			
+			scrollPane.setPrefWidth(newValue.doubleValue() - rightMenuAnchorPane.getPrefWidth() - leftMenuAnchorPane.getPrefWidth() );											
 		});
-		mainBorderPane.heightProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {				
-				appPane.setPrefHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight());			
-				rightMenuAnchorPane.setMinHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight()  - downVBox.getPrefHeight());
-				leftMenuAnchorPane.setPrefHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight() - downVBox.getPrefHeight());
-			}
+		
+		mainBorderPane.heightProperty().addListener((obs, oldValue, newValue) -> {			
+			scrollPane.setPrefHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight());				
+			rightMenuAnchorPane.setPrefHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight()  - downVBox.getPrefHeight());
+			leftMenuAnchorPane.setPrefHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight() - downVBox.getPrefHeight());			
 		});
 	}
-	
-	
+		
 	public AppController getAppController() {
 		return appController;
 	}

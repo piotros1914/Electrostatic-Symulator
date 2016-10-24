@@ -34,9 +34,8 @@
 	-fx-padding: 10;
 	-fx-margin: 10;	
 	-fx-focus-color: transparent;
-	  -fx-padding: 0 ;
+	 -fx-padding: 0 ;
 	-fx-faint-focus-color: transparent;
-
 }
 
 .scroll{
