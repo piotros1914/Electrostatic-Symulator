@@ -1,6 +1,7 @@
 package electrostatic.java.fx.controller;
 
 import electrostatic.java.fx.model.ChargeControll;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.chart.NumberAxis;
@@ -9,6 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+
 
 public class AppController {
 
@@ -22,11 +24,12 @@ public class AppController {
 	private int boxWidth = 300;
 	private int boxHeight = 300;
 
-	private NumberAxis xAxis;
+	private NumberAxis xTopAxis;
 	private NumberAxis xDownAxis;
-	private NumberAxis yAxis;
+	private NumberAxis yLeftAxis;
 	private NumberAxis yRightAxis;
 	private int tickUnit = 100;
+	private int axisDistance = 5;
 
 	private ContextMenu contextMenu;
 	private MenuItem addMenuItem;
@@ -37,50 +40,57 @@ public class AppController {
 
 	@FXML
 	void initialize() {
-		xAxis = new NumberAxis(0, boxWidth, tickUnit);
+		xTopAxis = new NumberAxis(0, boxWidth, tickUnit);
 		xDownAxis = new NumberAxis(0, boxWidth, tickUnit);
-		yAxis = new NumberAxis(0, boxHeight, tickUnit);
+		yLeftAxis = new NumberAxis(0, boxHeight, tickUnit);
 		yRightAxis = new NumberAxis(0, boxHeight, tickUnit);
 
-		xAxis.setStyle("-fx-color: black;" + " -fx-background-color: transparent;" + "");
-		xAxis.setSide(Side.TOP);
-		xAxis.setMinorTickVisible(false);
+		xTopAxis.getStyleClass().add("axe");
+		xTopAxis.setSide(Side.TOP);
+		xTopAxis.setMinorTickVisible(false);
 
-		xDownAxis.setStyle("-fx-color: black;" + " -fx-background-color: transparent;" + "");
+		xDownAxis.getStyleClass().add("axe");
 		xDownAxis.setSide(Side.BOTTOM);
 		xDownAxis.setMinorTickVisible(false);
 
-		yAxis.setStyle("-fx-color: black;" + " -fx-background-color: transparent;" + "");
-		yAxis.setSide(Side.LEFT);
-		yAxis.setMinorTickVisible(false);
+		yLeftAxis.getStyleClass().add("axe");
+		yLeftAxis.setSide(Side.LEFT);
+		yLeftAxis.setMinorTickVisible(false);
 
-		yRightAxis.setStyle("-fx-color: black;" + " -fx-background-color: transparent;" + "");
+		yRightAxis.getStyleClass().add("axe");
 		yRightAxis.setSide(Side.RIGHT);
 		yRightAxis.setMinorTickVisible(false);
 
-		xAxis.prefHeightProperty().set(30);
+		xTopAxis.prefHeightProperty().set(30);
 		xDownAxis.prefHeightProperty().set(30);
-		yAxis.prefWidthProperty().set(30);
+		yLeftAxis.prefWidthProperty().set(30);
 		yRightAxis.prefWidthProperty().set(30);
 
 		box = new Pane();
-		box.minWidthProperty().set(boxWidth);
-		box.minHeightProperty().set(boxHeight);
+		// box.minWidthProperty().set(boxWidth);
+		// box.minHeightProperty().set(boxHeight);
 		box.prefWidthProperty().set(boxWidth);
 		box.prefHeightProperty().set(boxHeight);
-		box.setStyle(" -fx-border-style: solid inside;" + " -fx-border-color: black;" + " -fx-border-width: 1;"
-				+ " -fx-background-color: transparent,"
-				+ "  linear-gradient(from 0.5px 0px to 50.5px 0px, repeat, #808080 1%, transparent 1%),"
-				+ "  linear-gradient(from 0px 0.5px to 0px 50.5px, repeat, #808080 0.1%, transparent 1%);");
-		box.getChildren().addAll(xAxis, xDownAxis, yAxis, yRightAxis);
+		box.getStyleClass().add("box");
+		box.getChildren().addAll(xTopAxis, xDownAxis, yLeftAxis, yRightAxis);
+
+		xTopAxis.layoutYProperty().set(-xTopAxis.prefHeightProperty().get() - axisDistance);
+		xDownAxis.layoutYProperty().set(box.prefHeightProperty().get() + axisDistance);
+		yLeftAxis.layoutXProperty().set(-yLeftAxis.prefWidthProperty().getValue() - axisDistance);
+		yRightAxis.layoutXProperty().set(box.prefWidthProperty().get() + axisDistance);
 
 		appPane.getChildren().add(box);
 
-		// listenery dla wymiarów i layoutu
-		setAppPaneListeners();
+		// listenery dla ustawien wymiarów boxa, jego wysrodkowania i ustawien
+		// jego osi
+		setListeners();
 
+		// inicjacja g³ównego sterownika ³adunków
 		chargeControll = new ChargeControll(box);
 
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		// tworzenie menu kontekstowego
 		contextMenu = new ContextMenu();
 
 		addMenuItem = new MenuItem("Nowy ³adunek");
@@ -95,19 +105,6 @@ public class AppController {
 			if (mouseEvent.getButton() == MouseButton.SECONDARY)
 				mouseEvent.consume();
 		});
-
-		// wy³¹czenie zaznaczonego ³adunku
-		appPane.setOnMouseClicked(mouseEvent -> {
-			if (chargeControll.getSelectedCharge() != null)
-				if (mouseEvent.getX() < box.getLayoutX() || mouseEvent.getX() > (box.getLayoutX() + box.getPrefWidth())
-						|| mouseEvent.getY() < box.getLayoutY() || mouseEvent.getY() > (box.getLayoutY() + box.getPrefHeight())) {
-				
-						chargeControll.deselectAllCharges();
-						mainController.getLeftMenuController().clear();
-						mainController.getRightMenuController().clear();
-				}
-		});
-		// czokolokoo0vhhgv
 
 		// przechwytywanie uruchomienia menu kontekstowego
 		box.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
@@ -125,34 +122,81 @@ public class AppController {
 			} else
 				contextMenu.hide();
 		});
-	}
 
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+//		appPane.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEvent-> {
+//			mainController.getCursorPositionXLabel().setText("0");
+//			mainController.getCursorPositionYLabel().setText("0");
+//			
+//		});
+		box.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEvent-> {
+			mainController.getCursorPositionXLabel().setText(String.valueOf(mouseEvent.getX()));
+			mainController.getCursorPositionYLabel().setText(String.valueOf(mouseEvent.getY()));
+			
+		});
+		
+		// wy³¹czenie zaznaczonego ³adunku
+		appPane.setOnMouseClicked(mouseEvent -> {
+			if (chargeControll.getSelectedCharge() != null)
+				if (mouseEvent.getX() < box.getLayoutX() || mouseEvent.getX() > (box.getLayoutX() + box.getPrefWidth())
+						|| mouseEvent.getY() < box.getLayoutY()
+						|| mouseEvent.getY() > (box.getLayoutY() + box.getPrefHeight())) {
+
+					chargeControll.deselectAllCharges();
+					mainController.getLeftMenuController().clear();
+					mainController.getRightMenuController().clear();
+				}
+		});
+
+	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void setAppPaneListeners() {
+	private void setListeners() {
+
+		xTopAxis.prefWidthProperty().bind(box.prefWidthProperty());
+		xDownAxis.prefWidthProperty().bind(box.prefWidthProperty());
+		yLeftAxis.prefHeightProperty().bind(box.prefHeightProperty());
+		yRightAxis.prefHeightProperty().bind(box.prefHeightProperty());
+
 		appPane.prefWidthProperty().addListener((obs, oldValue, newValue) -> {
-			int x = (int) (newValue.doubleValue() / 2 - boxWidth / 2);
+			// wysrodkowanie boxa
+			int x = (int) (newValue.doubleValue() / 2 - box.getPrefWidth() / 2);
 			box.layoutXProperty().set(x);
-			box.prefWidthProperty().set(boxWidth);
-
-			xAxis.prefWidthProperty().bind(box.prefWidthProperty());
-			xAxis.layoutYProperty().set(-xAxis.prefHeightProperty().get() - 5);
-
-			xDownAxis.prefWidthProperty().bind(box.prefWidthProperty());
-			xDownAxis.layoutYProperty().set(box.prefHeightProperty().get() + 5);
 		});
 
 		appPane.prefHeightProperty().addListener((obs, oldValue, newValue) -> {
-			int y = (int) (newValue.doubleValue() / 2 - boxHeight / 2);
+			// wysrodkowanie boxa
+			int y = (int) (newValue.doubleValue() / 2 - box.getPrefHeight() / 2);
 			box.layoutYProperty().set(y);
-			box.prefHeightProperty().set(boxHeight);
-
-			yAxis.prefHeightProperty().bind(box.prefHeightProperty());
-			yAxis.layoutXProperty().set(-yAxis.prefWidthProperty().getValue() - 5);
-
-			yRightAxis.prefHeightProperty().bind(box.prefHeightProperty());
-			yRightAxis.layoutXProperty().set(box.prefWidthProperty().get() + 5);
 		});
+
+		box.prefWidthProperty().addListener((obs, oldValue, newValue) -> {
+			// wysrodkowanie boxa
+			int x = (int) (appPane.getPrefWidth() / 2 - newValue.doubleValue() / 2);
+			box.layoutXProperty().set(x);
+
+			// ustawienie skali na osi
+			xTopAxis.upperBoundProperty().set(newValue.doubleValue());
+			xDownAxis.upperBoundProperty().set(newValue.doubleValue());
+
+			// ustawienie pozycji prawej osi
+			yRightAxis.layoutXProperty().set(box.prefWidthProperty().get() + axisDistance);
+		});
+
+		box.prefHeightProperty().addListener((obs, oldValue, newValue) -> {
+			// wysrodkowanie boxa
+			int y = (int) (appPane.getPrefHeight() / 2 - newValue.doubleValue() / 2);
+			box.layoutYProperty().set(y);
+
+			// ustawienie skali na osi
+			yLeftAxis.upperBoundProperty().set(newValue.doubleValue());
+			yRightAxis.upperBoundProperty().set(newValue.doubleValue());
+
+			// ustawienie pozycji dolnej osi
+			xDownAxis.layoutYProperty().set(box.prefHeightProperty().get() + axisDistance);
+		});
+
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,7 +219,7 @@ public class AppController {
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
 		chargeControll.setMainController(mainController);
-		chargeControll.setChargeObservableListListener();
+		chargeControll.setChargeObservableListListener();		
 	}
 
 	public ChargeControll getChargeControll() {
@@ -184,6 +228,14 @@ public class AppController {
 
 	public void setChargeControll(ChargeControll chargeControll) {
 		this.chargeControll = chargeControll;
+	}
+
+	public Pane getBox() {
+		return box;
+	}
+
+	public void setBox(Pane box) {
+		this.box = box;
 	}
 
 }

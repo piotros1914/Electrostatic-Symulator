@@ -1,5 +1,17 @@
 
+.axe {
+	-fx-color: black;
+	-fx-background-color: transparent;
+}
 
+.box {
+	-fx-border-style: solid inside;
+	-fx-border-color: black;
+	-fx-border-width: 1;
+	-fx-background-color: transparent,
+			linear-gradient(from 0.5px 0px to 50.5px 0px, repeat, #808080 1%, transparent 1%),
+			linear-gradient(from 0px 0.5px to 0px 50.5px, repeat, #808080 0.1%, transparent 1%);
+}
 .split-pane:vertical > .split-pane-divider {
    -fx-background-color: black;
    -fx-padding: 0 ;
@@ -20,15 +32,27 @@
 }
 .appPaneBox{
 	-fx-padding: 10;
-	-fx-margin: 10;
-  //  -fx-border-style: solid inside;
-  //  -fx-border-width: 2;
-  //  -fx-border-insets: 5;
-   // -fx-border-radius: 1;
-   // -fx-border-color:black;
-  //  -fx-background-color: #666666,
-  //      linear-gradient(from 0.5px 0px to 10.5px 0px, repeat, black 5%, transparent 5%),
-  //     
-   
+	-fx-margin: 10;	
+	-fx-focus-color: transparent;
+	  -fx-padding: 0 ;
+	-fx-faint-focus-color: transparent;
+
 }
 
+.scroll{
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	-fx-border-style: none;
+	-fx-padding: 0 ;
+	
+}
+.scroll:focused{
+	-fx-background-color: transparent,-fx-box-border,-fx-control-inner-background;
+  	-fx-background-insets: -1.4, 0, 1;
+  	-fx-background-radius: 1.4, 0, 0;
+ 	-fx-padding: 0; 
+	
+  
+}
+
+ 

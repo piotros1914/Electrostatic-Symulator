@@ -151,7 +151,7 @@ public class ChargeControll implements Cloneable {
 				Bindings.unbindBidirectional(mainController.getRightMenuController().getColorPicker().valueProperty(),
 						charge.colorProperty());
 
-				mainController.getRightMenuController().getRightTitledPane().disableProperty().unbind();
+				mainController.getRightMenuController().getChargeTitledPane().disableProperty().unbind();
 
 			});
 	}
@@ -174,7 +174,7 @@ public class ChargeControll implements Cloneable {
 		Bindings.bindBidirectional(mainController.getRightMenuController().getColorPicker().valueProperty(),
 				charge.colorProperty());
 
-		mainController.getRightMenuController().getRightTitledPane().disableProperty()
+		mainController.getRightMenuController().getChargeTitledPane().disableProperty()
 				.bind(charge.getDisabledProperty());
 
 	}
@@ -269,27 +269,21 @@ public class ChargeControll implements Cloneable {
 	public void checkColisions() {
 
 		chargeObservableList.forEach(charge -> {
-
 			// dla lewej
-			if (7 > (charge.getCenterX() - charge.getRadius())) {
-				charge.setCenterX(charge.getRadius() + 7);
-			}
+			if (0 > (charge.getCenterX() - charge.getRadius())) 
+				charge.setCenterX(charge.getRadius());
 
 			// dla prawej
-			if ((box.getWidth() - 7) < (charge.getCenterX() + charge.getRadius())) {
-				charge.setCenterX(box.getWidth() - 7 - charge.getRadius());
-			}
+			if ((box.getWidth()) < (charge.getCenterX() + charge.getRadius()))
+				charge.setCenterX(box.getWidth() - charge.getRadius());
 
 			// dla góry
-			if (7 > (charge.getCenterY() - charge.getRadius())) {
-				charge.setCenterY(charge.getRadius() + 7);
-			}
+			if (0 > (charge.getCenterY() - charge.getRadius()))
+				charge.setCenterY(charge.getRadius());		
 
 			// dla do³u
-			if ((box.getHeight() - 7) < (charge.getCenterY() + charge.getRadius())) {
-				charge.setCenterY(box.getHeight() - 7 - charge.getRadius());
-			}
-
+			if ((box.getHeight()) < (charge.getCenterY() + charge.getRadius()))
+				charge.setCenterY(box.getHeight() - charge.getRadius());
 		});
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

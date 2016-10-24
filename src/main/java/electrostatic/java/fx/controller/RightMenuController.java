@@ -1,7 +1,7 @@
 package electrostatic.java.fx.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.SetBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,6 +9,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.paint.Color;
+import javafx.util.converter.NumberStringConverter;
 
 public class RightMenuController {
 
@@ -31,8 +32,18 @@ public class RightMenuController {
 	private Button deleteBtn;
 
 	@FXML
-	private TitledPane rightTitledPane;
+	private TitledPane chargeTitledPane;
+	
+	/////////////////////////////////////////////////////////////
+	
+	@FXML
+	private TextField widthTextField;
+	
+	@FXML
+	private TextField heightTextField;
 
+	//////////////////////////////////////////////////
+	
 	MainController mainController;
 
 	// @FXML
@@ -50,21 +61,15 @@ public class RightMenuController {
 	@FXML
 	void initialize() {
 
-		rightTitledPane.disableProperty().set(true);
-//		positionYTextField.textProperty().addListener(new ChangeListener<String>() {
-//
-//			@Override
-//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//			System.out.println("newValue = " + newValue);
-//			System.out.println("oldValue = " + oldValue);
-//				
-//			newValue = String.valueOf(-Double.valueOf(newValue).doubleValue());
-//			positionYTextField.textProperty().set(newValue);
-			
+		chargeTitledPane.disableProperty().set(true);
+		
 
 
 	}
-
+	private void setBinding(){
+		Bindings.bindBidirectional(widthTextField.textProperty(), mainController.getAppController().getBox().prefWidthProperty(), new NumberStringConverter());
+		Bindings.bindBidirectional(heightTextField.textProperty(), mainController.getAppController().getBox().prefHeightProperty(), new NumberStringConverter());
+	}
 	public void clear() {
 
 		positionXTextField.clear();
@@ -97,6 +102,7 @@ public class RightMenuController {
 
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
+		setBinding();
 	}
 
 	public TextField getRadiusTextField() {
@@ -131,12 +137,31 @@ public class RightMenuController {
 		this.colorPicker = colorPicker;
 	}
 
-	public TitledPane getRightTitledPane() {
-		return rightTitledPane;
+	public TitledPane getChargeTitledPane() {
+		return chargeTitledPane;
 	}
 
-	public void setRightTitledPane(TitledPane rightTitledPane) {
-		this.rightTitledPane = rightTitledPane;
+	public void setChargeTitledPane(TitledPane chargeTitledPane) {
+		this.chargeTitledPane = chargeTitledPane;
 	}
 
+	public TextField getWidthTextField() {
+		return widthTextField;
+	}
+
+	public void setWidthTextField(TextField widthTextField) {
+		this.widthTextField = widthTextField;
+	}
+
+	public TextField getHeightTextField() {
+		return heightTextField;
+	}
+
+	public void setHeightTextField(TextField heightTextField) {
+		this.heightTextField = heightTextField;
+	}
+
+	
+	
+	
 }

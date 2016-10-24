@@ -15,9 +15,70 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="electrostatic.java.fx.controller.RightMenuController">
    <children>
-      <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
         <panes>
-          <TitledPane fx:id="rightTitledPane" animated="false" disable="true" prefHeight="2000.0" prefWidth="230.0" text="Wybrany ładunek">
+            <TitledPane fx:id="rightTitledPane1" animated="false" layoutX="10.0" layoutY="10.0" prefHeight="2000.0" prefWidth="230.0" text="Pudło symulacyjne">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="228.0">
+                     <children>
+                        <VBox prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                           <children>
+                              <Separator />
+                              <HBox alignment="TOP_RIGHT">
+                                 <children>
+                                    <Label text="Rozmiar">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" top="2.0" />
+                                 </padding>
+                              </HBox>
+                              <Separator layoutX="10.0" layoutY="82.0" />
+                              <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="50.0" prefWidth="70.0" spacing="5.0">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="25.0" text="Szerokość:">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER" prefHeight="25.0" text="Wysokość::">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="130.0" spacing="5.0">
+                                       <children>
+                                          <TextField fx:id="widthTextField" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                          </TextField>
+                                          <TextField fx:id="heightTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+          <TitledPane fx:id="chargeTitledPane" animated="false" disable="true" prefHeight="2000.0" prefWidth="230.0" text="Wybrany ładunek">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="228.0">
                      <children>

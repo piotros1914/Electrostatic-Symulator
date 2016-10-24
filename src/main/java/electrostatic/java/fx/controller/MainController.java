@@ -28,6 +28,7 @@ public class MainController {
 		
 	@FXML
 	private BorderPane mainBorderPane;
+	
 	@FXML
 	private VBox topMenuVBox;
 	
@@ -43,7 +44,18 @@ public class MainController {
 	@FXML
 	private Label timeAnimationLabel;
 	
+	@FXML
+	private VBox downVBox;
+	
+	@FXML
+	private Label cursorPositionXLabel;
+	
+	@FXML
+	private Label cursorPositionYLabel;
+	
+	
 	private Pane appPane;
+	private ScrollPane scrollPane;
 	private AnchorPane rightMenuAnchorPane;
 	private AnchorPane leftMenuAnchorPane;
 	
@@ -69,11 +81,11 @@ public class MainController {
 	
 		appController = appLoader.getController();
 		appController.setMainController(this);
-		ScrollPane scrollPane = new ScrollPane(appPane);
-//		mainBorderPane.setCenter(appPane);	
+		scrollPane = new ScrollPane(appPane);
+		scrollPane.autosize();
+		scrollPane.getStyleClass().add("scroll");
 		mainBorderPane.setCenter( scrollPane);	
-		
-		
+			
 		
 		FXMLLoader rightMenuLoader = new FXMLLoader(this.getClass().getResource("/fxml/RightMenuView.fxml"));
 		
@@ -85,6 +97,7 @@ public class MainController {
 		rightMenuController = rightMenuLoader.getController();
 		rightMenuController.setMainController(this);
 		mainBorderPane.setRight(rightMenuAnchorPane);
+		
 			
 		FXMLLoader leftMenuLoader = new FXMLLoader(this.getClass().getResource("/fxml/LeftMenuView.fxml"));
 		
@@ -98,15 +111,15 @@ public class MainController {
 		mainBorderPane.setLeft(leftMenuAnchorPane);
 		
 		
-		// Symulator
-		
+		// Symulator		
 		symulatorTimer = new SymulatorTimer(timeAnimationLabel);
 		symulatorTimer.setMainController(this);
-		System.out.print("a");
+	
 		// Parametry szerokoœci i wysokoœci
 		appPane.minWidthProperty().set(mainBorderPane.getPrefWidth() - rightMenuAnchorPane.getPrefWidth() - leftMenuAnchorPane.getPrefWidth());
 		appPane.setMinHeight(mainBorderPane.getPrefHeight() - topMenuVBox.getPrefHeight());	
-		rightMenuAnchorPane.setMinHeight(mainBorderPane.getPrefHeight() - topMenuVBox.getPrefHeight());
+		leftMenuAnchorPane.setPrefHeight(mainBorderPane.getPrefHeight() - topMenuVBox.getPrefHeight() - downVBox.getPrefHeight());
+		rightMenuAnchorPane.setPrefHeight(mainBorderPane.getPrefHeight() - topMenuVBox.getPrefHeight()  - downVBox.getPrefHeight());
 		sizeListener();	
 		
 	}
@@ -186,7 +199,8 @@ public class MainController {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {				
 				appPane.setPrefHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight());			
-				rightMenuAnchorPane.setMinHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight());
+				rightMenuAnchorPane.setMinHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight()  - downVBox.getPrefHeight());
+				leftMenuAnchorPane.setPrefHeight(newValue.doubleValue() - topMenuVBox.getPrefHeight() - downVBox.getPrefHeight());
 			}
 		});
 	}
@@ -224,6 +238,23 @@ public class MainController {
 	public void setLeftMenuAnchorPane(AnchorPane leftMenuAnchorPane) {
 		this.leftMenuAnchorPane = leftMenuAnchorPane;
 	}
+
+	public Label getCursorPositionXLabel() {
+		return cursorPositionXLabel;
+	}
+
+	public void setCursorPositionXLabel(Label cursorPositionXLabel) {
+		this.cursorPositionXLabel = cursorPositionXLabel;
+	}
+
+	public Label getCursorPositionYLabel() {
+		return cursorPositionYLabel;
+	}
+
+	public void setCursorPositionYLabel(Label cursorPositionYLabel) {
+		this.cursorPositionYLabel = cursorPositionYLabel;
+	}
+	
 	
 	
 }
