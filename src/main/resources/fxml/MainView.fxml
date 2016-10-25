@@ -23,7 +23,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Plik">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Otwórz" />
+                    <MenuItem mnemonicParsing="false" onAction="#openFileAction" text="Otwórz" />
                         <MenuItem mnemonicParsing="false" text="Zapisz" />
                         <MenuItem mnemonicParsing="false" text="Zapisz jako..." />
                         <SeparatorMenuItem mnemonicParsing="false" />
@@ -33,6 +33,7 @@
                 <Menu mnemonicParsing="false" text="Widok">
                   <items>
                         <CheckMenuItem mnemonicParsing="false" text="Pokarz wektory sił" />
+                        <CheckMenuItem fx:id="showGridMenuItem" mnemonicParsing="false" selected="true" text="Pokarz siatkę" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Pomoc">

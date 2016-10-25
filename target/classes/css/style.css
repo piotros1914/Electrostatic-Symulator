@@ -8,6 +8,12 @@
 	-fx-border-style: solid inside;
 	-fx-border-color: black;
 	-fx-border-width: 1;
+	-fx-background-color: transparent;
+}
+.box_grid {
+	-fx-border-style: solid inside;
+	-fx-border-color: black;
+	-fx-border-width: 1;
 	-fx-background-color: transparent,
 			linear-gradient(from 0.5px 0px to 50.5px 0px, repeat, #808080 1%, transparent 1%),
 			linear-gradient(from 0px 0.5px to 0px 50.5px, repeat, #808080 0.1%, transparent 1%);

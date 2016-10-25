@@ -35,6 +35,7 @@ public class Main  extends Application{
         Scene scene = new Scene(borderPane);
        
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Elektrostatyka v1.0");
         primaryStage.show();
     }
  

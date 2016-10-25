@@ -11,7 +11,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-
 public class AppController {
 
 	@FXML
@@ -67,11 +66,9 @@ public class AppController {
 		yRightAxis.prefWidthProperty().set(30);
 
 		box = new Pane();
-		// box.minWidthProperty().set(boxWidth);
-		// box.minHeightProperty().set(boxHeight);
 		box.prefWidthProperty().set(boxWidth);
 		box.prefHeightProperty().set(boxHeight);
-		box.getStyleClass().add("box");
+		box.getStyleClass().add("box_grid");
 		box.getChildren().addAll(xTopAxis, xDownAxis, yLeftAxis, yRightAxis);
 
 		xTopAxis.layoutYProperty().set(-xTopAxis.prefHeightProperty().get() - axisDistance);
@@ -81,7 +78,8 @@ public class AppController {
 
 		appPane.getChildren().add(box);
 
-		// listenery dla ustawien wymiarów boxa, jego wysrodkowania i ustawien jego osi
+		// listenery dla ustawien wymiarów boxa, jego wysrodkowania i ustawien
+		// jego osi
 		setListeners();
 
 		// inicjacja g³ównego sterownika ³adunków
@@ -123,14 +121,14 @@ public class AppController {
 		});
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
 
-		box.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEvent-> {
+		box.addEventHandler(MouseEvent.MOUSE_MOVED, mouseEvent -> {
 			mainController.getCursorPositionXLabel().setText(String.valueOf(mouseEvent.getX()));
-			mainController.getCursorPositionYLabel().setText(Converter.mouseYConverter(mouseEvent.getY(), box.getWidth()));
-			
+			mainController.getCursorPositionYLabel()
+					.setText(Converter.mouseYConverter(mouseEvent.getY(), box.getWidth()));
+
 		});
-		
+
 		// wy³¹czenie zaznaczonego ³adunku
 		appPane.setOnMouseClicked(mouseEvent -> {
 			if (chargeControll.getSelectedCharge() != null)
@@ -147,6 +145,16 @@ public class AppController {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public void showGrid(boolean show){		
+			box.getStyleClass().clear();
+		if(show)
+			box.getStyleClass().add("box_grid");
+		else
+			box.getStyleClass().add("box");
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	private void setListeners() {
 
 		xTopAxis.prefWidthProperty().bind(box.prefWidthProperty());
@@ -154,17 +162,16 @@ public class AppController {
 		yLeftAxis.prefHeightProperty().bind(box.prefHeightProperty());
 		yRightAxis.prefHeightProperty().bind(box.prefHeightProperty());
 
-		
 		appPane.widthProperty().addListener((obs, oldValue, newValue) -> {
-			// wysrodkowanie boxa			
+			// wysrodkowanie boxa
 			int x = (int) (newValue.doubleValue() / 2 - box.getPrefWidth() / 2);
-			box.layoutXProperty().set(x);					
+			box.layoutXProperty().set(x);
 		});
 
-		appPane.heightProperty().addListener((obs, oldValue, newValue) -> {	
-			// wysrodkowanie boxa		
+		appPane.heightProperty().addListener((obs, oldValue, newValue) -> {
+			// wysrodkowanie boxa
 			int y = (int) (newValue.doubleValue() / 2 - box.getPrefHeight() / 2);
-			box.layoutYProperty().set(y);			
+			box.layoutYProperty().set(y);
 		});
 
 		box.prefWidthProperty().addListener((obs, oldValue, newValue) -> {
@@ -178,10 +185,10 @@ public class AppController {
 
 			// ustawienie pozycji prawej osi
 			yRightAxis.layoutXProperty().set(box.prefWidthProperty().get() + axisDistance);
-			
-			//ustawienie szerokosci appPane
+
+			// ustawienie szerokosci appPane
 			appPane.setPrefWidth(newValue.doubleValue() + 200);
-		
+
 		});
 
 		box.prefHeightProperty().addListener((obs, oldValue, newValue) -> {
@@ -221,7 +228,7 @@ public class AppController {
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
 		chargeControll.setMainController(mainController);
-		chargeControll.setChargeObservableListListener();		
+		chargeControll.setChargeObservableListListener();
 	}
 
 	public ChargeControll getChargeControll() {

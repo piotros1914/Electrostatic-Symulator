@@ -1,7 +1,7 @@
 package electrostatic.java.fx.controller;
 
+import java.io.File;
 import java.io.IOException;
-
 
 import electrostatic.java.fx.model.SymulatorTimer;
 import javafx.application.Platform;
@@ -9,12 +9,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -27,6 +31,9 @@ public class MainController {
 	
 	@FXML
 	private VBox topMenuVBox;
+	
+	@FXML
+	private CheckMenuItem showGridMenuItem;
 	
 	@FXML
 	private Button playBtn;
@@ -53,18 +60,21 @@ public class MainController {
 	private Pane appPane;
 	private ScrollPane scrollPane;
 	private AnchorPane rightMenuAnchorPane;
-	private AnchorPane leftMenuAnchorPane;
-	
+	private AnchorPane leftMenuAnchorPane;	
 	private AppController appController;
 	private RightMenuController rightMenuController;
 	private LeftMenuController leftMenuController;
 	
 	private  SymulatorTimer symulatorTimer;
 	
+	private Stage dialogStage;
+	
 		
 	@FXML
 	void initialize(){
-	
+		
+		dialogStage = new Stage();
+		
 		FXMLLoader appLoader = new FXMLLoader(this.getClass().getResource("/fxml/AppView.fxml"));
 		
 		try {
@@ -111,6 +121,12 @@ public class MainController {
 		mainBorderPane.setLeft(leftMenuAnchorPane);
 		
 		
+		// Wydarzenia dla menu - widok. Listenery
+		showGridMenuItem.selectedProperty().addListener((obs, oldValue, newValue) -> {			
+			appController.showGrid(newValue);
+		});
+		
+		
 		// Symulator		
 		symulatorTimer = new SymulatorTimer(timeAnimationLabel);
 		symulatorTimer.setMainController(this);
@@ -128,25 +144,31 @@ public class MainController {
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	
+	@FXML
+	void openFileAction(){
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Otwórz Plik");
+		 fileChooser.getExtensionFilters().add(new ExtensionFilter("Pliki TSV", "*.tsv"));
+	      
+	        File plik = fileChooser.showOpenDialog(dialogStage);
+	     
+	        if (plik != null) {
+	          
+	            System.out.println("Plik: "+ plik.getAbsolutePath());
+	 
+	        }
+	}
+	
 	@FXML
     void closeAction() {
-
 		Platform.exit();
     }
 	
 	@FXML
 	void aboutAction(){
-		
-//	    final Stage dialog = new Stage();
-//        dialog.initModality(Modality.NONE);
-////        dialog.initOwner(mainBorderPane);
-//        VBox dialogVbox = new VBox(20);
-//        dialogVbox.getChildren().add(new Text("This is a Dialog"));
-//        Scene dialogScene = new Scene(dialogVbox, 300, 200);
-//        dialog.setScene(dialogScene);
-//        dialog.show();
-//        
-        final Stage aboutStage = new Stage();
+		    
+      
         AnchorPane aboutPane = new AnchorPane();
         FXMLLoader aboutLoader = new FXMLLoader(this.getClass().getResource("/fxml/AboutView.fxml"));
 		
@@ -155,18 +177,20 @@ public class MainController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Scene aboutScene = new Scene(aboutPane, 300, 300);
-		aboutStage.initModality(Modality.WINDOW_MODAL);
-		aboutStage.setScene(aboutScene);
-		aboutStage.show();
+		Scene aboutScene = new Scene(aboutPane);
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(mainBorderPane.getScene().getWindow());
+		dialogStage.setScene(aboutScene);
+		dialogStage.setTitle("O programie");
+		dialogStage.getIcons().add(new Image("/icons/About-icon.png"));
+		dialogStage.show();
 	
 	}
-	
+		
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 	
 	@FXML
-	public void playAction(){	
-		
+	public void playAction(){		
 		if(!symulatorTimer.wasPause()){
 			appController.getChargeControll().saveChargesPosition();		
 		}				
@@ -209,7 +233,6 @@ public class MainController {
 		this.appController = appController;
 	}
 
-
 	public RightMenuController getRightMenuController() {
 		return rightMenuController;
 	}
@@ -249,7 +272,5 @@ public class MainController {
 	public void setCursorPositionYLabel(Label cursorPositionYLabel) {
 		this.cursorPositionYLabel = cursorPositionYLabel;
 	}
-	
-	
-	
+
 }

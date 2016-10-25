@@ -6,7 +6,7 @@ import javafx.util.StringConverter;
 public class Converter {
 	
 	private static DecimalFormat formatter = new DecimalFormat("#0");
-	private static DecimalFormat formatterForce = new DecimalFormat("#0.00");
+//	private static DecimalFormat formatterForce = new DecimalFormat("#0.00");
 	
 	static public StringConverter<Number> yInverseConverter(double height){
 		
