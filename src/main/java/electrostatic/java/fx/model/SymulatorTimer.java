@@ -36,9 +36,9 @@ public class SymulatorTimer extends AnimationTimer {
     		clock += (now - old);
     		timeAnimationLabel.setText(String.valueOf( Converter.round(clock/1000000000.0 , 2)) + " s");
     	  
-        	mainController.getAppController().getChargeControll().updateForce();
-    		mainController.getAppController().getChargeControll().updatePosition(timeStep);
-    		mainController.getAppController().getChargeControll().checkColisions();
+//        	mainController.getAppController().getChargeControll().updateForce();
+//    		mainController.getAppController().getChargeControll().updatePosition(timeStep);
+//    		mainController.getAppController().getChargeControll().checkColisions();
     	
     	}
 		old = now;

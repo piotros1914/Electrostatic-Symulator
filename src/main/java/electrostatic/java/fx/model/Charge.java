@@ -30,13 +30,18 @@ public class Charge extends Circle {
 	private BooleanProperty selectedProperty;
 	private BooleanProperty disabledProperty;
 	private String name;
+	private int id;
 	private double mass;
 	private double safePositionX;
 	private double safePositionY;
+	private static int count = 1;
 
-	public Charge(double positionX, double positionY, double radius, double charge) {
-
-		super(positionX, positionY, radius);
+	public Charge(double positionX, double positionY, double charge) {
+		
+		
+		super(positionX, positionY, 30);
+		name = "£adunek " + String.valueOf(count);
+		id = count;
 
 		this.chargeProperty = new SimpleDoubleProperty(charge);
 		this.selectedProperty = new SimpleBooleanProperty(true);
@@ -56,6 +61,7 @@ public class Charge extends Circle {
 		this.selectedOpacity = 0.7;
 
 		setSelected(true);
+		count++;
 
 	}
 
@@ -182,4 +188,11 @@ public class Charge extends Circle {
 		this.centerYProperty().set(safePositionY);
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public int getIdNumber() {
+		return id;
+	}
+	
+	
+	
 }

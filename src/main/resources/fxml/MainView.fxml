@@ -1,122 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+
 
 <BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="electrostatic.java.fx.controller.MainController">
    <top>
-      <VBox fx:id="topMenuVBox" prefHeight="69.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="topVBox" prefHeight="69.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="Plik">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#openFileAction" text="Otwórz" />
-                        <MenuItem mnemonicParsing="false" text="Zapisz" />
-                        <MenuItem mnemonicParsing="false" text="Zapisz jako..." />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#closeAction" text="Zamknij" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Widok">
-                  <items>
-                        <CheckMenuItem mnemonicParsing="false" text="Pokarz wektory sił" />
-                        <CheckMenuItem fx:id="showGridMenuItem" mnemonicParsing="false" selected="true" text="Pokarz siatkę" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Pomoc">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#aboutAction" text="O programie" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-            <ToolBar prefHeight="80.0" prefWidth="600.0">
-              <items>
-                <Button fx:id="playbBtn" alignment="CENTER" mnemonicParsing="false" onAction="#playAction" prefHeight="20.0" prefWidth="33.0" style="-fx-background-image: url(/icons/Start-icon.png); -fx-background-repeat: no-repeat;   -fx-background-position: center;" textOverrun="CLIP">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="pauseBtn" alignment="CENTER" mnemonicParsing="false" onAction="#pauseAction" prefHeight="20.0" prefWidth="33.0" style="-fx-background-image: url(/icons/Pause-icon.png); -fx-background-repeat: no-repeat;   -fx-background-position: center;" textOverrun="CLIP">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="stopBtn" alignment="CENTER" mnemonicParsing="false" onAction="#stopAction" prefHeight="20.0" prefWidth="33.0" style="-fx-background-image: url(/icons/Stop-icon.png); -fx-background-repeat: no-repeat;   -fx-background-position: center;" textOverrun="CLIP">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Label fx:id="timeAnimationLabel" />
-              </items>
-            </ToolBar>
+            <fx:include fx:id="menu" source="MenuView.fxml" />
+            <fx:include fx:id="animationToolBar" source="AnimationToolBarView.fxml" />
          </children>
       </VBox>
    </top>
+   <right>
+      <fx:include fx:id="right" source="RightView.fxml" />
+   </right>
+   <left>
+      <fx:include fx:id="left" source="LeftView.fxml" />
+   </left>
    <center>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="465.0" prefWidth="602.0" BorderPane.alignment="CENTER">
+         <children>
+            <fx:include fx:id="app" source="AppView.fxml" />
+         </children>
+      </AnchorPane>
    </center>
    <bottom>
-      <VBox fx:id="downVBox" prefHeight="30.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefWidth="60.0" spacing="5.0">
-                     <children>
-                        <Label text="X:">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="cursorPositionXLabel" prefWidth="40.0" text="0">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="60.0" spacing="5.0">
-                     <children>
-                        <Label text="Y:">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="cursorPositionYLabel" prefWidth="40.0" text="0">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </HBox>
-         </children>
+      <VBox fx:id="bottomVBox">  
+      		<fx:include fx:id="bottom" source="BottomView.fxml" />
       </VBox>
    </bottom>
 </BorderPane>

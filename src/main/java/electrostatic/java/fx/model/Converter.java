@@ -49,7 +49,7 @@ public class Converter {
 		}
 	};
 	
-	static StringConverter<Number> normalConverter = new StringConverter<Number>() {
+	public static StringConverter<Number> normalConverter = new StringConverter<Number>() {
 		@Override
 		public String toString(Number object) {
 			double d = object.doubleValue();
